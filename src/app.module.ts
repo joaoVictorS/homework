@@ -4,6 +4,7 @@ import { dataSourceOptions } from './configs/ormconfig';
 import { UserModule } from './modules/user/user.module';
 import { ProposalModule } from './modules/proposal/proposal.module';
 import { UserMiddleware } from './get-user-middleware';
+import { AdminController } from './infra/http/controllers/admin.controller';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { UserMiddleware } from './get-user-middleware';
     UserModule,
     ProposalModule,
   ],
+  controllers: [AdminController],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

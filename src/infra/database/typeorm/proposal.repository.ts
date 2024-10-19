@@ -45,4 +45,15 @@ export class TypeOrmProposalRepository implements IProposalRepository {
       relations: ['userCreator'],
     });
   }
+
+  async getProfitByStatus(): Promise<any> {
+    return await this.proposalRepository
+      .createQueryBuilder('proposal')
+      .select('proposal.status', 'status')
+      .addSelect('proposal.userCreatorId', 'userId')
+      .addSelect('SUM(proposal.profit)', 'totalProfit')
+      .groupBy('proposal.status')
+      .addGroupBy('proposal.userCreatorId')
+      .getRawMany();
+  }
 }
