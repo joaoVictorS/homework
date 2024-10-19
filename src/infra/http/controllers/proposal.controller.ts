@@ -1,14 +1,17 @@
-import { Controller, Get, Param } from '@nestjs/common';
-import { GetProposalByIdUseCase } from '../../../core/use-cases/proposal/get-proposal-by-id.usecase';
+// src/infra/http/controllers/proposal.controller.ts
+import { Controller, Get, Req } from '@nestjs/common';
+import { Request } from 'express'; // Importa a interface Request do express
+import { GetPendingProposalsByUserUseCase } from '../../../core/use-cases/proposal/get-pending-proposals-by-user.usecase';
 
 @Controller('proposals')
 export class ProposalController {
   constructor(
-    private readonly getProposalByIdUseCase: GetProposalByIdUseCase,
+    private readonly getPendingProposalsByUserUseCase: GetPendingProposalsByUserUseCase,
   ) {}
 
-  @Get(':id')
-  async getProposalById(@Param('id') id: number) {
-    return await this.getProposalByIdUseCase.execute(id);
+  @Get()
+  async getPendingProposals(@Req() req: Request) {
+    const user = req['user']; // O middleware já injeta o usuário na requisição
+    return await this.getPendingProposalsByUserUseCase.execute(user.id);
   }
 }

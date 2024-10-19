@@ -2,7 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { IProposalRepository } from '../../../core/domain/repositories/proposal.repository';
-import { Proposal } from '../../../core/domain/entities/proposal.entity';
+import {
+  Proposal,
+  ProposalStatus,
+} from '../../../core/domain/entities/proposal.entity';
 
 @Injectable()
 export class TypeOrmProposalRepository implements IProposalRepository {
@@ -27,5 +30,12 @@ export class TypeOrmProposalRepository implements IProposalRepository {
 
   async save(proposal: Proposal): Promise<void> {
     await this.proposalRepository.save(proposal);
+  }
+
+  async findPendingByUserId(userId: number): Promise<Proposal[]> {
+    return await this.proposalRepository.find({
+      where: { userCreator: { id: userId }, status: ProposalStatus.PENDING },
+      relations: ['userCreator'],
+    });
   }
 }

@@ -5,6 +5,7 @@ import { ProposalController } from '../../infra/http/controllers/proposal.contro
 import { GetProposalByIdUseCase } from '../../core/use-cases/proposal/get-proposal-by-id.usecase';
 import { GetProposalsByUserIdUseCase } from '../../core/use-cases/proposal/get-proposals-by-user-id.usecase';
 import { TypeOrmProposalRepository } from '../../infra/database/typeorm/proposal.repository';
+import { GetPendingProposalsByUserUseCase } from 'src/core/use-cases/proposal/get-pending-proposals-by-user.usecase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Proposal])],
@@ -12,8 +13,16 @@ import { TypeOrmProposalRepository } from '../../infra/database/typeorm/proposal
   providers: [
     GetProposalByIdUseCase,
     GetProposalsByUserIdUseCase,
-    { provide: 'IProposalRepository', useClass: TypeOrmProposalRepository },
+    GetPendingProposalsByUserUseCase,
+    {
+      provide: 'IProposalRepository',
+      useClass: TypeOrmProposalRepository,
+    },
   ],
-  exports: ['IProposalRepository', GetProposalsByUserIdUseCase],
+  exports: [
+    'IProposalRepository',
+    GetProposalsByUserIdUseCase,
+    GetPendingProposalsByUserUseCase,
+  ],
 })
 export class ProposalModule {}
