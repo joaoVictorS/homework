@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Proposal } from '../../core/domain/entities/proposal.entity';
 import { ProposalController } from '../../infra/http/controllers/proposal.controller';
@@ -7,15 +7,18 @@ import { GetProposalsByUserIdUseCase } from '../../core/use-cases/proposal/get-p
 import { TypeOrmProposalRepository } from '../../infra/database/typeorm/proposal.repository';
 import { GetPendingProposalsByUserUseCase } from 'src/core/use-cases/proposal/get-pending-proposals-by-user.usecase';
 import { GetRefusedProposalsByUserUseCase } from 'src/core/use-cases/proposal/get-refused-proposals-by-user.usecase';
+import { ApproveProposalUseCase } from 'src/core/use-cases/proposal/approve-proposal.usecase';
+import { UserModule } from '../user/user.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Proposal])],
+  imports: [TypeOrmModule.forFeature([Proposal]), forwardRef(() => UserModule)],
   controllers: [ProposalController],
   providers: [
     GetProposalByIdUseCase,
     GetProposalsByUserIdUseCase,
     GetPendingProposalsByUserUseCase,
     GetRefusedProposalsByUserUseCase,
+    ApproveProposalUseCase,
     {
       provide: 'IProposalRepository',
       useClass: TypeOrmProposalRepository,
@@ -26,6 +29,7 @@ import { GetRefusedProposalsByUserUseCase } from 'src/core/use-cases/proposal/ge
     GetProposalsByUserIdUseCase,
     GetPendingProposalsByUserUseCase,
     GetRefusedProposalsByUserUseCase,
+    ApproveProposalUseCase,
   ],
 })
 export class ProposalModule {}

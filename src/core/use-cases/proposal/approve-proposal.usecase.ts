@@ -1,32 +1,49 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  Inject,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { IProposalRepository } from '../../domain/repositories/proposal.repository';
 import { IUserRepository } from '../../domain/repositories/user.repository';
+import {
+  Proposal,
+  ProposalStatus,
+} from '../../domain/entities/proposal.entity';
 
 @Injectable()
 export class ApproveProposalUseCase {
   constructor(
+    @Inject('IProposalRepository')
     private readonly proposalRepository: IProposalRepository,
-    private readonly userRepository: IUserRepository,
+    @Inject('IUserRepository') private readonly userRepository: IUserRepository,
   ) {}
 
-  async execute(proposalId: number, userId: number): Promise<void> {
+  async execute(proposalId: number, userId: number): Promise<Proposal> {
     const proposal = await this.proposalRepository.findById(proposalId);
+
     if (!proposal) {
-      throw new Error('Proposta não encontrada');
+      throw new NotFoundException(
+        `Proposta com ID ${proposalId} não encontrada`,
+      );
     }
 
-    if (proposal.userCreator.id !== userId) {
-      throw new Error('Usuário não autorizado para aprovar esta proposta');
+    if (proposal.status !== ProposalStatus.PENDING) {
+      throw new BadRequestException('A proposta não está em estado pendente');
     }
 
-    proposal.approve();
-    await this.proposalRepository.save(proposal);
+    proposal.status = ProposalStatus.SUCCESSFUL;
 
-    // Atualizar o balance do usuário
     const user = await this.userRepository.findById(userId);
-    if (user) {
-      user.balance += proposal.profit;
-      await this.userRepository.save(user);
+    if (!user) {
+      throw new NotFoundException(`Usuário com ID ${userId} não encontrado`);
     }
+
+    user.balance += proposal.profit;
+
+    await this.proposalRepository.save(proposal);
+    await this.userRepository.save(user);
+
+    return proposal;
   }
 }
