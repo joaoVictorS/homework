@@ -1,22 +1,19 @@
-import { Injectable, NestMiddleware } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable, NestMiddleware, Inject } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
-import { User } from './entities/entities.entity';
-import { Repository } from 'typeorm';
+import { IUserRepository } from './core/domain/repositories/user.repository';
 
 @Injectable()
 export class UserMiddleware implements NestMiddleware {
   constructor(
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
+    @Inject('IUserRepository') private readonly userRepository: IUserRepository,
   ) {}
 
   async use(req: Request, res: Response, next: NextFunction) {
-    const userId = req.headers['user_id'];
+    const userId = req.headers['user-id'];
     if (userId) {
-      const user = await this.userRepository.findOneBy({ id: Number(userId) });
+      const user = await this.userRepository.findById(Number(userId));
       if (user) {
-        (req as any).user = user;
+        req['user'] = user;
       }
     }
     next();

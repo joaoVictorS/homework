@@ -1,16 +1,16 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { AppController } from './app.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOptions } from './configs/ormconfig';
+import { UserModule } from './modules/user/user.module';
+import { ProposalModule } from './modules/proposal/proposal.module';
 import { UserMiddleware } from './get-user-middleware';
-import { Proposal, User } from './entities/entities.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(dataSourceOptions),
-    TypeOrmModule.forFeature([User, Proposal]),
+    UserModule,
+    ProposalModule,
   ],
-  controllers: [AppController],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
