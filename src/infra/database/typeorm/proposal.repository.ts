@@ -38,4 +38,11 @@ export class TypeOrmProposalRepository implements IProposalRepository {
       relations: ['userCreator'],
     });
   }
+
+  async findRefusedByUserId(userId: number): Promise<Proposal[]> {
+    return await this.proposalRepository.find({
+      where: { userCreator: { id: userId }, status: ProposalStatus.REFUSED },
+      relations: ['userCreator'],
+    });
+  }
 }
