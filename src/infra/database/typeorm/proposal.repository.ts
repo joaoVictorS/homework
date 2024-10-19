@@ -56,4 +56,24 @@ export class TypeOrmProposalRepository implements IProposalRepository {
       .addGroupBy('proposal.userCreatorId')
       .getRawMany();
   }
+
+  async getBestUsersByProfit(start: string, end: string): Promise<any> {
+    const proposals = await this.proposalRepository
+      .createQueryBuilder('proposal')
+      .select('proposal.userCreatorId', 'userId')
+      .addSelect('SUM(proposal.profit)', 'totalProfit')
+      .addSelect('proposal.createdAt', 'createdAt')
+      .where('proposal.status = :status', { status: 'SUCCESSFUL' })
+      .groupBy('proposal.userCreatorId, proposal.createdAt')
+      .orderBy('totalProfit', 'DESC')
+      .getRawMany();
+
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+
+    return proposals.filter((proposal) => {
+      const createdAt = new Date(proposal.createdAt);
+      return createdAt >= startDate && createdAt <= endDate;
+    });
+  }
 }

@@ -35,11 +35,4 @@ export class Proposal {
 
   @Column({ type: 'datetime' })
   updatedAt: Date;
-
-  approve() {
-    if (this.status !== ProposalStatus.PENDING) {
-      throw new Error('A proposta só pode ser aprovada se estiver pendente.');
-    }
-    this.status = ProposalStatus.SUCCESSFUL;
-  }
 }

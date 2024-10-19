@@ -6,5 +6,6 @@ export interface IProposalRepository {
   findById(id: number | string): Promise<Proposal>;
   findByUserId(userId: number, status?: ProposalStatus): Promise<Proposal[]>;
   getProfitByStatus(): Promise<any>;
+  getBestUsersByProfit(start: Date | string, end: Date | string): Promise<any>;
   save(proposal: Proposal): Promise<void>;
 }

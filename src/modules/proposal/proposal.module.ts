@@ -10,6 +10,7 @@ import { GetRefusedProposalsByUserUseCase } from 'src/core/use-cases/proposal/ge
 import { ApproveProposalUseCase } from 'src/core/use-cases/proposal/approve-proposal.usecase';
 import { UserModule } from '../user/user.module';
 import { GetProfitByStatusUseCase } from 'src/core/use-cases/proposal/get-profit-by-status.usecase';
+import { GetBestUsersByProfitUseCase } from 'src/core/use-cases/proposal/get-best-users-by-profit.usecase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Proposal]), forwardRef(() => UserModule)],
@@ -21,6 +22,7 @@ import { GetProfitByStatusUseCase } from 'src/core/use-cases/proposal/get-profit
     GetRefusedProposalsByUserUseCase,
     ApproveProposalUseCase,
     GetProfitByStatusUseCase,
+    GetBestUsersByProfitUseCase,
     {
       provide: 'IProposalRepository',
       useClass: TypeOrmProposalRepository,
@@ -33,6 +35,7 @@ import { GetProfitByStatusUseCase } from 'src/core/use-cases/proposal/get-profit
     GetRefusedProposalsByUserUseCase,
     ApproveProposalUseCase,
     GetProfitByStatusUseCase,
+    GetBestUsersByProfitUseCase,
   ],
 })
 export class ProposalModule {}
