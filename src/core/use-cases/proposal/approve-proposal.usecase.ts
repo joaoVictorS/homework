@@ -20,7 +20,7 @@ export class ApproveProposalUseCase {
   ) {}
 
   async execute(proposalId: number, userId: number): Promise<Proposal> {
-    const proposal = await this.proposalRepository.findById(proposalId);
+    const proposal = await this.proposalRepository.findById(proposalId, userId);
 
     if (!proposal) {
       throw new NotFoundException(

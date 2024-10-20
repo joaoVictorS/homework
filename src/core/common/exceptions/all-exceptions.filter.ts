@@ -4,18 +4,16 @@ import {
   ArgumentsHost,
   HttpException,
   HttpStatus,
-  Logger,
+  Injectable,
 } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 
+@Injectable()
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
-  private readonly logger = new Logger(AllExceptionsFilter.name);
-
   catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
-    const request = ctx.getRequest<Request>();
     const status =
       exception instanceof HttpException
         ? exception.getStatus()
@@ -24,18 +22,14 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const message =
       exception instanceof HttpException
         ? exception.getResponse()
-        : 'Erro interno no servidor';
+        : 'Internal server error';
 
-    this.logger.error(
-      `Status: ${status}, Error: ${JSON.stringify(message)}, Path: ${
-        request.url
-      }`,
-    );
-
-    response.status(status).json({
+    const errorResponse = {
       statusCode: status,
       timestamp: new Date().toISOString(),
-      message: message,
-    });
+      message,
+    };
+
+    response.status(status).json(errorResponse);
   }
 }

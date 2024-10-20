@@ -1,8 +1,9 @@
 import { Controller, Get, Param, Post, Req } from '@nestjs/common';
-import { Request } from 'express'; // Importa a interface Request do express
+import { Request } from 'express'; 
 import { GetPendingProposalsByUserUseCase } from '../../../core/use-cases/proposal/get-pending-proposals-by-user.usecase';
 import { GetRefusedProposalsByUserUseCase } from 'src/core/use-cases/proposal/get-refused-proposals-by-user.usecase';
 import { ApproveProposalUseCase } from 'src/core/use-cases/proposal/approve-proposal.usecase';
+import { GetProposalByIdUseCase } from 'src/core/use-cases/proposal/get-proposal-by-id.usecase';
 
 @Controller('proposals')
 export class ProposalController {
@@ -10,7 +11,14 @@ export class ProposalController {
     private readonly getPendingProposalsByUserUseCase: GetPendingProposalsByUserUseCase,
     private readonly getRefusedProposalsByUserUseCase: GetRefusedProposalsByUserUseCase,
     private readonly approveProposalUseCase: ApproveProposalUseCase,
+    private readonly getProposalByIdUseCase: GetProposalByIdUseCase,
   ) {}
+
+  @Get(':id')
+  async getProposalById(@Param('id') id: number, @Req() req: Request) {
+    const user = req['user'];
+    return await this.getProposalByIdUseCase.execute(id, user.id);
+  }
 
   @Get()
   async getPendingProposals(@Req() req: Request) {

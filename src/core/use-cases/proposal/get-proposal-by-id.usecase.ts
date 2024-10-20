@@ -9,7 +9,7 @@ export class GetProposalByIdUseCase {
     private readonly proposalRepository: IProposalRepository,
   ) {}
 
-  async execute(id: number): Promise<Proposal | null> {
-    return await this.proposalRepository.findById(id);
+  async execute(id: number, userId: number): Promise<Proposal | null> {
+    return await this.proposalRepository.findById(id, userId);
   }
 }
