@@ -1,4 +1,3 @@
-// src/components/Sidebar.tsx
 import { useState } from 'react';
 import Form from './Form';
 import { apiService } from '../services/apiService';
@@ -27,8 +26,18 @@ const Sidebar = ({ userId, setUserId, setResult }: SidebarProps) => {
   const [customerId, setCustomerId] = useState<number | string>(''); 
   const [profit, setProfit] = useState<number | string>('');
 
+  // Função auxiliar para verificar se userId está preenchido
+  const checkUserId = () => {
+    if (!userId) {
+      toast.error('Por favor, insira um ID de usuário válido');
+      return false;
+    }
+    return true;
+  };
+
   // Funções para chamadas de API via apiService
   const handleGetUsers = async () => {
+    if (!checkUserId()) return;
     try {
       setLoading(true);
       const data = await apiService.getUsers(userId);
@@ -42,6 +51,7 @@ const Sidebar = ({ userId, setUserId, setResult }: SidebarProps) => {
   };
 
   const handleGetCustomers = async () => {
+    if (!checkUserId()) return;
     try {
       setLoading(true);
       const data = await apiService.getCustomers(userId);
@@ -55,6 +65,7 @@ const Sidebar = ({ userId, setUserId, setResult }: SidebarProps) => {
   };
 
   const handleCreateCustomer = async () => {
+    if (!checkUserId()) return;
     try {
       setLoading(true);
       const data = await apiService.createCustomer(userId, customerName, customerCpf);
@@ -71,6 +82,7 @@ const Sidebar = ({ userId, setUserId, setResult }: SidebarProps) => {
   };
 
   const handleCreateProposal = async () => {
+    if (!checkUserId()) return;
     try {
       setLoading(true);
       const data = await apiService.createProposal(userId, customerId, profit);
@@ -87,6 +99,7 @@ const Sidebar = ({ userId, setUserId, setResult }: SidebarProps) => {
   };
 
   const handleGetProposal = async () => {
+    if (!checkUserId()) return;
     try {
       setLoading(true);
       const data = await apiService.getPendingProposals(userId, customerId, profit);
@@ -96,13 +109,14 @@ const Sidebar = ({ userId, setUserId, setResult }: SidebarProps) => {
       setCustomerId('');
       setProfit('');
     } catch (error) {
-      toast.error('Erro ao criar proposta');
+      toast.error('Erro ao buscar propostas');
     } finally {
       setLoading(false);
     }
   };
 
   const handleApproveProposal = async () => {
+    if (!checkUserId()) return;
     if (!proposalId) {
       toast.error('Por favor, insira um ID de proposta válido');
       return;
