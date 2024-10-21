@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { IUserRepository } from '../../../core/domain/repositories/user.repository';
@@ -6,7 +10,8 @@ import { User } from '../../../core/domain/entities/user.entity';
 
 @Injectable()
 export class TypeOrmUserRepository implements IUserRepository {
-  logger: any;
+  private readonly logger = new Logger(TypeOrmUserRepository.name);
+
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,

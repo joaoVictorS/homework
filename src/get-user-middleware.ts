@@ -27,7 +27,6 @@ export class UserMiddleware implements NestMiddleware {
         `Usuário com o ID ${userId} não foi encontrado.`,
       );
     }
-
     req['user'] = user;
     next();
   }
