@@ -130,24 +130,25 @@ Cria um novo usuário no sistema.
     
     Copiar código
     
-    `{
+    ```
+    {
       "name": "John Doe"
-    }` 
+      "cpf": 12159753258
+    }
+    ```
     
 -   **Resposta de Sucesso**:
     
-    json
-    
-    Copiar código
-    
-    {
+   ```
+   {
       "id": 1,
       "name": "John Doe",
+      "cpf": 12159753258
       "balance": 0,
       "createdAt": "2024-10-21T10:00:00.000Z",
       "updatedAt": "2024-10-21T10:00:00.000Z"
     } 
-    
+    ```{
 
 #### **GET** `/users/:id`
 
@@ -157,11 +158,8 @@ Busca detalhes de um usuário por seu ID.
     
     -   `id`: ID do usuário a ser buscado.
 -   **Resposta de Sucesso**:
-    
-    json
-    
-    Copiar código
-    
+
+    ```
     {
       "id": 1,
       "name": "John Doe",
@@ -169,6 +167,7 @@ Busca detalhes de um usuário por seu ID.
       "createdAt": "2024-10-21T10:00:00.000Z",
       "updatedAt": "2024-10-21T10:00:00.000Z"
     } 
+    ```
     
 
 ### Clientes
@@ -179,23 +178,18 @@ Cria um novo cliente associado a um usuário.
 
 -   **Body**:
     
-    json
-    
-    Copiar código
-    
+    ```
     {
       "name": "ACME Corp",
       "cpf": "12345678900",
       "userId": 1
       
     }
+    ```
     
 -   **Resposta de Sucesso**:
     
-    json
-    
-    Copiar código
-    
+    ```
     {
       "id": 1,
       "name": "ACME Corp",
@@ -203,6 +197,7 @@ Cria um novo cliente associado a um usuário.
       "userCreator": { "id": 1, "name": "John Doe" }
       
     } 
+    ```
     
 
 #### **GET** `/customers/:id`
@@ -213,11 +208,8 @@ Busca um cliente pelo ID.
     
     -   `id`: ID do cliente a ser buscado.
 -   **Resposta de Sucesso**:
-    
-    json
-    
-    Copiar código
-    
+
+    ```
     {
       "id": 1,
       "name": "ACME Corp",
@@ -225,6 +217,7 @@ Busca um cliente pelo ID.
       "userCreator": { "id": 1, "name": "John Doe" }
       
     }
+    ```
     
 
 ### Propostas
@@ -235,22 +228,18 @@ Cria uma nova proposta para um cliente.
 
 -   **Body**:
     
-    json
-    
-    Copiar código
-    
+    ```
     {
       "customerId": 1,
       "profit": 5000
       
     } 
+    ```
     
 -   **Resposta de Sucesso**:
     
-    json
     
-    Copiar código
-    
+    ```
     {
       "id": 1,
       "customer": { "id": 1, "name": "ACME Corp" },
@@ -261,6 +250,7 @@ Cria uma nova proposta para um cliente.
       "updatedAt": "2024-10-21T10:00:00.000Z"
       
     } 
+    ```
     
 
 #### **GET** `/proposals/:id`
@@ -272,10 +262,7 @@ Retorna uma proposta específica associada ao ID do usuário autenticado.
     -   `id`: ID da proposta a ser buscada.
 -   **Resposta de Sucesso**:
     
-    json
-    
-    Copiar código
-    
+    ```
     {
       "id": 1,
       "customer": { "id": 1, "name": "ACME Corp" },
@@ -284,7 +271,7 @@ Retorna uma proposta específica associada ao ID do usuário autenticado.
       "status": "PENDING"
       
     } 
-    
+    ```
 
 #### **GET** `/proposals/refused`
 
@@ -292,10 +279,7 @@ Lista as propostas recusadas do usuário autenticado.
 
 -   **Resposta de Sucesso**:
     
-    json
-    
-    Copiar código
-    
+    ```
     [
       {
         "id": 1,
@@ -306,6 +290,7 @@ Lista as propostas recusadas do usuário autenticado.
       }
       
     ] 
+    ```
     
 
 #### **POST** `/proposals/:proposal_id/approve`
@@ -317,10 +302,7 @@ Aprova uma proposta pendente e credita o valor no saldo do usuário.
     -   `proposal_id`: ID da proposta a ser aprovada.
 -   **Resposta de Sucesso**:
     
-    json
-    
-    Copiar código
-    
+    ```
     {
       "id": 1,
       "customer": { "id": 1, "name": "ACME Corp" },
@@ -329,7 +311,7 @@ Aprova uma proposta pendente e credita o valor no saldo do usuário.
       "status": "SUCCESSFUL"
       
     } 
-    
+    ```
 
 ----------
 
@@ -339,29 +321,14 @@ A API conta com **testes unitários** e **testes de integração**. Para rodar o
 
 -   **Testes Unitários**:
     
-    bash
-    
-    Copiar código
-    
-    `yarn test` 
-    
--   **Testes de Integração**:
-    
-    bash
-    
-    Copiar código
-    
-    `yarn test:e2e` 
+    `npm run test` 
     
 
 ### Estrutura de Testes
 
 Os testes estão organizados da seguinte forma:
 
-bash
-
-Copiar código
-
+```
 src/
 ├── core/
 │   └── use-cases/
@@ -374,3 +341,4 @@ src/
 └── modules/
     └── proposal/
         └── __tests__/proposal.module.spec.ts
+```
