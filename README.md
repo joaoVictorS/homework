@@ -59,7 +59,7 @@ src/
 
 ### Requisitos
 
--   **Node.js** (>= 14.x)
+-   **Node.js** (>= 16.x)
 -   **Yarn** ou **npm**
 -   **Banco de Dados**: SQLite ou outro configurado via TypeORM
 
