@@ -1,50 +1,38 @@
-# React + TypeScript + Vite
+# NestJS API Demo - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este é o frontend de demonstração de uma API criada com NestJS. Ele foi desenvolvido utilizando **React** com **Vite**, **Tailwind CSS**, e inclui funcionalidades como requisições à API para manipulação de dados de usuários, clientes, e propostas.
 
-Currently, two official plugins are available:
+## Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Buscar Usuários:** Permite buscar todos os usuários cadastrados.
+- **Buscar Clientes:** Exibe a lista de clientes associados a um usuário.
+- **Criar Cliente:** Cria um novo cliente vinculado a um usuário.
+- **Buscar Propostas Pendentes:** Exibe todas as propostas pendentes do usuário.
+- **Aprovar Proposta:** Aprova uma proposta pendente de um cliente específico.
+- **Criar Proposta:** Cria uma nova proposta vinculada a um cliente.
 
-## Expanding the ESLint configuration
+## Tecnologias Utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **React**: Biblioteca JavaScript para construção de interfaces.
+- **Vite**: Ferramenta de desenvolvimento rápida para React.
+- **Tailwind CSS**: Framework CSS para estilização.
+- **React Toastify**: Biblioteca para exibir notificações (toasts).
+- **React Spinners**: Biblioteca para exibir loaders.
 
-- Configure the top-level `parserOptions` property like this:
+## Como Rodar o Projeto
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### Pré-requisitos
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- **Node.js** (>= 14.x)
+- **NPM** ou **Yarn**
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### Instalação
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+1. **Clone o repositório:**
+
+   ```bash
+   git clone https://github.com/seu-usuario/nestjs-api-demo-frontend.git
+   cd nestjs-api-demo-frontend
+
+  npm install
+  npm run dev
