@@ -117,9 +117,11 @@ Cria um novo usuário no sistema.
     
     Copiar código
     
-    ```{
+    ```
+    {
       "name": "John Doe"
-    }```
+    }
+    ```
     
 -   **Resposta de Sucesso**:
     
@@ -127,13 +129,15 @@ Cria um novo usuário no sistema.
     
     Copiar código
     
-    ```{
+    ```
+    {
       "id": 1,
       "name": "John Doe",
       "balance": 0,
       "createdAt": "2024-10-21T10:00:00.000Z",
       "updatedAt": "2024-10-21T10:00:00.000Z"
-    } ```
+    } 
+    ```
     
 
 #### **GET** `/users/:id`
@@ -149,13 +153,15 @@ Busca detalhes de um usuário por seu ID.
     
     Copiar código
     
-    ```{
+    ```
+    {
       "id": 1,
       "name": "John Doe",
       "balance": 1000,
       "createdAt": "2024-10-21T10:00:00.000Z",
       "updatedAt": "2024-10-21T10:00:00.000Z"
-    } ```
+    } 
+    ```
     
 
 ### Clientes
@@ -170,12 +176,14 @@ Cria um novo cliente associado a um usuário.
     
     Copiar código
     
-   ``` {
-      "name": "ACME Corp",
-      "cpf": "12345678900",
-      "userId": 1
-      
-    }`
+   ``` 
+   {
+    "name": "ACME Corp",
+    "cpf": "12345678900",
+    "userId": 1
+    
+    }
+    ```
     
 -   **Resposta de Sucesso**:
     
@@ -183,13 +191,15 @@ Cria um novo cliente associado a um usuário.
     
     Copiar código
     
-   ``` {
+   ``` 
+   {
       "id": 1,
       "name": "ACME Corp",
       "cpf": "12345678900",
       "userCreator": { "id": 1, "name": "John Doe" }
       
-    } `
+    } 
+    ```
     
 
 #### **GET** `/customers/:id`
@@ -205,13 +215,15 @@ Busca um cliente pelo ID.
     
     Copiar código
     
-   ``` {
+   ``` 
+   {
       "id": 1,
       "name": "ACME Corp",
       "cpf": "12345678900",
       "userCreator": { "id": 1, "name": "John Doe" }
       
-    }```
+    }
+    ```
     
 
 ### Propostas
@@ -226,11 +238,13 @@ Cria uma nova proposta para um cliente.
     
     Copiar código
     
-    ```{
+    ```
+    {
       "customerId": 1,
       "profit": 5000
       
-    } ```
+    } 
+    ```
     
 -   **Resposta de Sucesso**:
     
@@ -238,7 +252,8 @@ Cria uma nova proposta para um cliente.
     
     Copiar código
     
-   ``` {
+   ``` 
+   {
       "id": 1,
       "customer": { "id": 1, "name": "ACME Corp" },
       "userCreator": { "id": 1, "name": "John Doe" },
@@ -247,7 +262,8 @@ Cria uma nova proposta para um cliente.
       "createdAt": "2024-10-21T10:00:00.000Z",
       "updatedAt": "2024-10-21T10:00:00.000Z"
       
-    } ```
+    } 
+    ```
     
 
 #### **GET** `/proposals/:id`
@@ -263,14 +279,16 @@ Retorna uma proposta específica associada ao ID do usuário autenticado.
     
     Copiar código
     
-   ``` {
+   ``` 
+   {
       "id": 1,
       "customer": { "id": 1, "name": "ACME Corp" },
       "userCreator": { "id": 1, "name": "John Doe" },
       "profit": 5000,
       "status": "PENDING"
       
-    } ```
+    } 
+    ```
     
 
 #### **GET** `/proposals/refused`
@@ -283,7 +301,8 @@ Lista as propostas recusadas do usuário autenticado.
     
     Copiar código
     
-    ```[
+    ```
+    [
       {
         "id": 1,
         "customer": { "id": 1, "name": "ACME Corp" },
@@ -292,7 +311,8 @@ Lista as propostas recusadas do usuário autenticado.
         "status": "REFUSED"
       }
       
-    ] ```
+    ] 
+    ```
     
 
 #### **POST** `/proposals/:proposal_id/approve`
@@ -308,14 +328,16 @@ Aprova uma proposta pendente e credita o valor no saldo do usuário.
     
     Copiar código
     
-    ```{
+    ```
+    {
       "id": 1,
       "customer": { "id": 1, "name": "ACME Corp" },
       "userCreator": { "id": 1, "name": "John Doe" },
       "profit": 5000,
       "status": "SUCCESSFUL"
       
-    } ```
+    }
+    ```
     
 
 ----------
@@ -349,7 +371,8 @@ bash
 
 Copiar código
 
-```src/
+```
+src/
 ├── core/
 │   └── use-cases/
 │       └── create-user.usecase.spec.ts    # Testes unitários
@@ -360,4 +383,5 @@ Copiar código
 │           └── user.controller.spec.ts    # Testes de integração
 └── modules/
     └── proposal/
-        └── __tests__/proposal.module.spec.ts```
+        └── __tests__/proposal.module.spec.ts
+```
