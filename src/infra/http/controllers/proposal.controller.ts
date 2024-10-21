@@ -1,5 +1,12 @@
-import { Controller, Get, Param, Post, Req } from '@nestjs/common';
-import { Request } from 'express'; 
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  ParseIntPipe,
+} from '@nestjs/common';
+import { Request } from 'express';
 import { GetPendingProposalsByUserUseCase } from '../../../core/use-cases/proposal/get-pending-proposals-by-user.usecase';
 import { GetRefusedProposalsByUserUseCase } from 'src/core/use-cases/proposal/get-refused-proposals-by-user.usecase';
 import { ApproveProposalUseCase } from 'src/core/use-cases/proposal/approve-proposal.usecase';
@@ -14,9 +21,19 @@ export class ProposalController {
     private readonly getProposalByIdUseCase: GetProposalByIdUseCase,
   ) {}
 
-  @Get(':id')
-  async getProposalById(@Param('id') id: number, @Req() req: Request) {
+  @Get('refused')
+  async getRefusedProposals(@Req() req: Request) {
     const user = req['user'];
+    return await this.getRefusedProposalsByUserUseCase.execute(user.id);
+  }
+
+  @Get(':id')
+  async getProposalById(
+    @Param('id', ParseIntPipe) id: number,
+    @Req() req: Request,
+  ) {
+    const user = req['user'];
+
     return await this.getProposalByIdUseCase.execute(id, user.id);
   }
 
@@ -26,15 +43,9 @@ export class ProposalController {
     return await this.getPendingProposalsByUserUseCase.execute(user.id);
   }
 
-  @Get('refused')
-  async getRefusedProposals(@Req() req: Request) {
-    const user = req['user'];
-    return await this.getRefusedProposalsByUserUseCase.execute(user.id);
-  }
-
   @Post(':proposal_id/approve')
   async approveProposal(
-    @Param('proposal_id') proposalId: number,
+    @Param('proposal_id', ParseIntPipe) proposalId: number,
     @Req() req: Request,
   ) {
     const user = req['user'];
