@@ -42,7 +42,7 @@ bash
 
 Copiar código
 
-src/
+```src/
 ├── core/                  # Lógica de negócios (Casos de uso, Repositórios e Entidades)
 │   └── domain/            # Entidades e interfaces de repositório
 │   └── use-cases/         # Casos de uso que implementam a lógica
@@ -51,7 +51,7 @@ src/
 │   └── http/              # Controladores e rotas
 ├── modules/               # Módulos que organizam as funcionalidades
 └── common/                # Filtros globais, interceptors, middlewares
- 
+ ```
 
 ----------
 
@@ -71,8 +71,10 @@ src/
     
     Copiar código
     
-    `git clone https://github.com/seu-usuario/proposals-api.git
-    cd proposals-api` 
+    ```
+    git clone https://github.com/joaoVictorS/homework.git
+    cd server
+    ``` 
     
 2.  Instale as dependências:
     
@@ -80,26 +82,11 @@ src/
     
     Copiar código
     
-    `yarn install` 
+    ```
+    npm install
+    npm run migration:run
+    ```
     
-3.  Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis de ambiente:
-    
-    bash
-    
-    Copiar código
-    
-    `DATABASE_URL=sqlite://./data/proposals.db
-    PORT=3000` 
-    
-4.  Execute as migrações do banco de dados:
-    
-    bash
-    
-    Copiar código
-    
-    `yarn typeorm migration:run` 
-    
-
 ----------
 
 ## Execução
@@ -110,9 +97,9 @@ bash
 
 Copiar código
 
-`yarn start:dev` 
+`npm start` 
 
-A API estará disponível no endereço `http://localhost:3000`.
+A API estará disponível no endereço `http://localhost:3005`.
 
 ----------
 
@@ -133,14 +120,15 @@ Cria um novo usuário no sistema.
     ```
     {
       "name": "John Doe"
-      "cpf": 12159753258
-    }
-    ```
+    }` 
     
 -   **Resposta de Sucesso**:
     
-   ```
-   {
+    json
+    
+    Copiar código
+    
+    {
       "id": 1,
       "name": "John Doe",
       "cpf": 12159753258
@@ -148,7 +136,7 @@ Cria um novo usuário no sistema.
       "createdAt": "2024-10-21T10:00:00.000Z",
       "updatedAt": "2024-10-21T10:00:00.000Z"
     } 
-    ```{
+    
 
 #### **GET** `/users/:id`
 
@@ -158,8 +146,11 @@ Busca detalhes de um usuário por seu ID.
     
     -   `id`: ID do usuário a ser buscado.
 -   **Resposta de Sucesso**:
-
-    ```
+    
+    json
+    
+    Copiar código
+    
     {
       "id": 1,
       "name": "John Doe",
@@ -178,7 +169,10 @@ Cria um novo cliente associado a um usuário.
 
 -   **Body**:
     
-    ```
+    json
+    
+    Copiar código
+    
     {
       "name": "ACME Corp",
       "cpf": "12345678900",
@@ -189,7 +183,10 @@ Cria um novo cliente associado a um usuário.
     
 -   **Resposta de Sucesso**:
     
-    ```
+    json
+    
+    Copiar código
+    
     {
       "id": 1,
       "name": "ACME Corp",
@@ -208,8 +205,11 @@ Busca um cliente pelo ID.
     
     -   `id`: ID do cliente a ser buscado.
 -   **Resposta de Sucesso**:
-
-    ```
+    
+    json
+    
+    Copiar código
+    
     {
       "id": 1,
       "name": "ACME Corp",
@@ -228,7 +228,10 @@ Cria uma nova proposta para um cliente.
 
 -   **Body**:
     
-    ```
+    json
+    
+    Copiar código
+    
     {
       "customerId": 1,
       "profit": 5000
@@ -239,7 +242,8 @@ Cria uma nova proposta para um cliente.
 -   **Resposta de Sucesso**:
     
     
-    ```
+    Copiar código
+    
     {
       "id": 1,
       "customer": { "id": 1, "name": "ACME Corp" },
@@ -262,7 +266,10 @@ Retorna uma proposta específica associada ao ID do usuário autenticado.
     -   `id`: ID da proposta a ser buscada.
 -   **Resposta de Sucesso**:
     
-    ```
+    json
+    
+    Copiar código
+    
     {
       "id": 1,
       "customer": { "id": 1, "name": "ACME Corp" },
@@ -271,7 +278,7 @@ Retorna uma proposta específica associada ao ID do usuário autenticado.
       "status": "PENDING"
       
     } 
-    ```
+    
 
 #### **GET** `/proposals/refused`
 
@@ -279,7 +286,10 @@ Lista as propostas recusadas do usuário autenticado.
 
 -   **Resposta de Sucesso**:
     
-    ```
+    json
+    
+    Copiar código
+    
     [
       {
         "id": 1,
@@ -302,7 +312,10 @@ Aprova uma proposta pendente e credita o valor no saldo do usuário.
     -   `proposal_id`: ID da proposta a ser aprovada.
 -   **Resposta de Sucesso**:
     
-    ```
+    json
+    
+    Copiar código
+    
     {
       "id": 1,
       "customer": { "id": 1, "name": "ACME Corp" },
@@ -311,7 +324,7 @@ Aprova uma proposta pendente e credita o valor no saldo do usuário.
       "status": "SUCCESSFUL"
       
     } 
-    ```
+    
 
 ----------
 
@@ -328,7 +341,10 @@ A API conta com **testes unitários** e **testes de integração**. Para rodar o
 
 Os testes estão organizados da seguinte forma:
 
-```
+bash
+
+Copiar código
+
 src/
 ├── core/
 │   └── use-cases/
