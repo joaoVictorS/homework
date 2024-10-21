@@ -10,6 +10,6 @@ export const dataSourceOptions: DataSourceOptions = {
   migrationsTableName: 'migrations',
   migrations: ['dist/infra/database/migrations/*.js'],
   synchronize: true,
-  logging: true,
+  // logging: true,
 };
 export default new DataSource(dataSourceOptions);

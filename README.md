@@ -1,95 +1,379 @@
-# TAYA BACKEND HOMEWORK
 
-💫 Bem-vindo(a)! 🎉
+# **Proposals API**
 
-Este exercício de back-end envolve a criação de um aplicativo Node.js/NestJS que fornecerá uma API REST para controle de crédito. Esperamos que você dedique cerca de 3 horas para implementar este recurso.
+## Sumário
 
-## Modelos de Dados
+-   [Introdução](#introdu%C3%A7%C3%A3o)
+-   [Arquitetura](#arquitetura)
+-   [Instalação e Configuração](#instala%C3%A7%C3%A3o-e-configura%C3%A7%C3%A3o)
+-   [Execução](#execu%C3%A7%C3%A3o)
+-   [Rotas da API](#rotas-da-api)
+    -   [Usuários](#usu%C3%A1rios)
+    -   [Clientes](#clientes)
+    -   [Propostas](#propostas)
+-   [Testes](#testes)
 
-> **Todos os modelos estão definidos em src/model.js**
 
-### Customer (cliente)
+----------
 
-Um cliente pode ter uma proposta;
-Cada cliente possui um saldo.
+## Introdução
 
-### Proposal (proposta)
+A **Proposals API** é uma API desenvolvida em **NestJS** que permite gerenciar propostas de usuários, clientes e administrar seus status de aprovação. A API oferece rotas para criar usuários, clientes e propostas, além de controlar a aprovação e listagem com base em diferentes status.
 
-Uma proposta para um cliente, cadastrado por um usuário.
-A proposta têm 3 status: PENDING, REFUSED, ERROR, SUCCESSFUL.
-propostas são ativas apenas no status PENDING.
+----------
 
-### User (usuário)
+## Arquitetura
 
-Usuários cadastram clientes e criam propostas.
+O projeto adota uma **arquitetura modular** e **escalável**, permitindo uma fácil manutenção e extensão. Ele é organizado em três camadas principais:
 
-## Configuração Inicial
+1.  **Core Layer**: Responsável pelas regras de negócio. Contém as entidades, repositórios e casos de uso.
+    
+    -   **Exemplo**: `create-user.usecase.ts`, `create-proposal.usecase.ts`
+2.  **Infra Layer**: Implementa a camada de infraestrutura. Conexão com o banco de dados via TypeORM, controladores HTTP e outros serviços.
+    
+    -   **Exemplo**: `typeorm/user.repository.ts`, `typeorm/proposal.repository.ts`
+3.  **Modules Layer**: Define a estrutura modular do projeto, agrupando as funcionalidades de maneira lógica.
+    
+    -   **Exemplo**: `user.module.ts`, `proposal.module.ts`, `customer.module.ts`
 
-O exercício requer [Node.js](https://nodejs.org/en/) 16. Recomendamos a versão LTS.
+### Estrutura de Diretórios
 
-1. Crie um repositório local para este projeto.
+bash
 
-1. No diretório raiz, execute `npm install` para coletar todas as dependências.
+Copiar código
 
-1. Garanta que o nest esteja instalado na sua maquina executando, `npm i -g @nestjs/cli`.
+`src/
+├── core/                  # Lógica de negócios (Casos de uso, Repositórios e Entidades)
+│   └── domain/            # Entidades e interfaces de repositório
+│   └── use-cases/         # Casos de uso que implementam a lógica
+├── infra/                 # Infraestrutura (banco de dados, controladores HTTP)
+│   └── database/          # Repositórios que interagem com o banco via TypeORM
+│   └── http/              # Controladores e rotas
+├── modules/               # Módulos que organizam as funcionalidades
+└── common/                # Filtros globais, interceptors, middlewares
 
-1. Use, `npm run migration:run` para popular o banco de dados SQLite local. **Alerta: Isso eliminará o banco de dados se ele existir**. O banco de dados fica no arquivo `database.sqlite3`.
+` 
 
-1. Execute `npm run start:dev` para iniciar o servidor.
+----------
 
-❗️ **Certifique-se de commitar todas as alterações na branch master!**
+## Instalação e Configuração
 
-## Notas Técnicas
+### Requisitos
 
-- O provedor de banco de dados é o SQLite, que armazenará os dados em um arquivo local no seu repositório chamado database.sqlite3. Você só precisará interagir com o ORM [TypeORM](https://typeorm.io/) - **por favor, dedique algum tempo para ler a documentação do TypeORM antes de começar o exercício.**
+-   **Node.js** (>= 14.x)
+-   **Yarn** ou **npm**
+-   **Banco de Dados**: SQLite ou outro configurado via TypeORM
 
-- Para autenticar usuários, utilize o middleware getProfile que está localizado em ./get-user-middleware.ts. Os usuários são autenticados passando `user_id` no cabeçalho da solicitação. Após um usuário ser autenticado, seu perfil estará disponível em `req.user`.
-- O servidor roda na porta 3005.
+### Passos de Instalação
 
-## APIs a Implementar
+1.  Clone o repositório:
+    
+    bash
+    
+    Copiar código
+    
+    `git clone https://github.com/seu-usuario/proposals-api.git
+    cd proposals-api` 
+    
+2.  Instale as dependências:
+    
+    bash
+    
+    Copiar código
+    
+    `yarn install` 
+    
+3.  Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis de ambiente:
+    
+    bash
+    
+    Copiar código
+    
+    `DATABASE_URL=sqlite://./data/proposals.db
+    PORT=3000` 
+    
+4.  Execute as migrações do banco de dados:
+    
+    bash
+    
+    Copiar código
+    
+    `yarn typeorm migration:run` 
+    
 
-Abaixo está uma lista das APIs necessárias para o aplicativo.
+----------
 
-1. **_GET_** `/proposals/:id` - Corrigir a API para retornar a proposta apenas se pertencer ao user que está chamando.
+## Execução
 
-1. **_GET_** `/proposals` - Retorna lista de proposals pendentes de um user.
+Para rodar a aplicação localmente, execute o comando:
 
-1. **_GET_** `/proposals/refused` - Obter propostas rejeitadas criadas por um user.
+bash
 
-1. **_POST_** `/proposals/:proposal_id/approve` - Dado uma proposta pendente, aprovar a proposta por id, retornar a proposta atualizada, valor do profit deve ser creadita no usuario que executou a operacao.
+Copiar código
 
-1. **_GET_** `/admin/profit-by-status` - Retorna a soma do profit de todas as propostas por usuario agrupada por status.
+`yarn start:dev` 
 
-1. **_GET_** `/admin/best-users?start=<date>&end=<date>` - Retorna os users que possuem o maior profit de propostas em sucesso vinculado.
+A API estará disponível no endereço `http://localhost:3000`.
 
-```
- [
-    {
+----------
+
+## Rotas da API
+
+### Usuários
+
+#### **POST** `/users`
+
+Cria um novo usuário no sistema.
+
+-   **Body**:
+    
+    json
+    
+    Copiar código
+    
+    `{
+      "name": "John Doe"
+    }` 
+    
+-   **Resposta de Sucesso**:
+    
+    json
+    
+    Copiar código
+    
+    `{
+      "id": 1,
+      "name": "John Doe",
+      "balance": 0,
+      "createdAt": "2024-10-21T10:00:00.000Z",
+      "updatedAt": "2024-10-21T10:00:00.000Z"
+      
+    }` 
+    
+
+#### **GET** `/users/:id`
+
+Busca detalhes de um usuário por seu ID.
+
+-   **Parâmetros de Rota**:
+    
+    -   `id`: ID do usuário a ser buscado.
+-   **Resposta de Sucesso**:
+    
+    json
+    
+    Copiar código
+    
+    `{
+      "id": 1,
+      "name": "John Doe",
+      "balance": 1000,
+      "createdAt": "2024-10-21T10:00:00.000Z",
+      "updatedAt": "2024-10-21T10:00:00.000Z"
+      
+    }` 
+    
+
+### Clientes
+
+#### **POST** `/customers`
+
+Cria um novo cliente associado a um usuário.
+
+-   **Body**:
+    
+    json
+    
+    Copiar código
+    
+    `{
+      "name": "ACME Corp",
+      "cpf": "12345678900",
+      "userId": 1
+      
+    }` 
+    
+-   **Resposta de Sucesso**:
+    
+    json
+    
+    Copiar código
+    
+    `{
+      "id": 1,
+      "name": "ACME Corp",
+      "cpf": "12345678900",
+      "userCreator": { "id": 1, "name": "John Doe" }
+      
+    }` 
+    
+
+#### **GET** `/customers/:id`
+
+Busca um cliente pelo ID.
+
+-   **Parâmetros de Rota**:
+    
+    -   `id`: ID do cliente a ser buscado.
+-   **Resposta de Sucesso**:
+    
+    json
+    
+    Copiar código
+    
+    `{
+      "id": 1,
+      "name": "ACME Corp",
+      "cpf": "12345678900",
+      "userCreator": { "id": 1, "name": "John Doe" }
+      
+    }` 
+    
+
+### Propostas
+
+#### **POST** `/proposals`
+
+Cria uma nova proposta para um cliente.
+
+-   **Body**:
+    
+    json
+    
+    Copiar código
+    
+    `{
+      "customerId": 1,
+      "profit": 5000
+      
+    }` 
+    
+-   **Resposta de Sucesso**:
+    
+    json
+    
+    Copiar código
+    
+    `{
+      "id": 1,
+      "customer": { "id": 1, "name": "ACME Corp" },
+      "userCreator": { "id": 1, "name": "John Doe" },
+      "profit": 5000,
+      "status": "PENDING",
+      "createdAt": "2024-10-21T10:00:00.000Z",
+      "updatedAt": "2024-10-21T10:00:00.000Z"
+      
+    }` 
+    
+
+#### **GET** `/proposals/:id`
+
+Retorna uma proposta específica associada ao ID do usuário autenticado.
+
+-   **Parâmetros de Rota**:
+    
+    -   `id`: ID da proposta a ser buscada.
+-   **Resposta de Sucesso**:
+    
+    json
+    
+    Copiar código
+    
+    `{
+      "id": 1,
+      "customer": { "id": 1, "name": "ACME Corp" },
+      "userCreator": { "id": 1, "name": "John Doe" },
+      "profit": 5000,
+      "status": "PENDING"
+      
+    }` 
+    
+
+#### **GET** `/proposals/refused`
+
+Lista as propostas recusadas do usuário autenticado.
+
+-   **Resposta de Sucesso**:
+    
+    json
+    
+    Copiar código
+    
+    `[
+      {
         "id": 1,
-        "fullName": "Rehan Howe",
-        "totalProposal" : 100.3
-    },
-    {
-        "id": 2,
-        "fullName": "Milo Wright",
-        "totalProposal" : 99
-    },
-    {
-        "id": 3,
-        "fullName": "Freyja Long",
-        "totalProposal" : 21
-    }
-]
-```
+        "customer": { "id": 1, "name": "ACME Corp" },
+        "userCreator": { "id": 1, "name": "John Doe" },
+        "profit": 5000,
+        "status": "REFUSED"
+      }
+      
+    ]` 
+    
 
-## Indo Além dos Requisitos
+#### **POST** `/proposals/:proposal_id/approve`
 
-Dada a expectativa de tempo deste exercício, não esperamos que alguém entregue algo muito sofisticado, mas se você encontrar tempo extra, qualquer item adicional que destaque suas habilidades únicas seria incrível! 🙌
+Aprova uma proposta pendente e credita o valor no saldo do usuário.
 
-Seria ótimo, por exemplo, se você escrevesse alguns testes unitários ou uma demonstração simples no frontend mostrando chamadas para suas novas APIs.
+-   **Parâmetros de Rota**:
+    
+    -   `proposal_id`: ID da proposta a ser aprovada.
+-   **Resposta de Sucesso**:
+    
+    json
+    
+    Copiar código
+    
+    `{
+      "id": 1,
+      "customer": { "id": 1, "name": "ACME Corp" },
+      "userCreator": { "id": 1, "name": "John Doe" },
+      "profit": 5000,
+      "status": "SUCCESSFUL"
+      
+    }` 
+    
 
-## Enviando a Tarefa
+----------
 
-Quando você terminar a tarefa, compacte o seu repositório (certifique-se de incluir a pasta .git) e nos envie o arquivo zipado.
+## Testes
 
-Obrigado e boa sorte! 🙏
+A API conta com **testes unitários** e **testes de integração**. Para rodar os testes, utilize os seguintes comandos:
+
+-   **Testes Unitários**:
+    
+    bash
+    
+    Copiar código
+    
+    `yarn test` 
+    
+-   **Testes de Integração**:
+    
+    bash
+    
+    Copiar código
+    
+    `yarn test:e2e` 
+    
+
+### Estrutura de Testes
+
+Os testes estão organizados da seguinte forma:
+
+bash
+
+Copiar código
+
+`src/
+├── core/
+│   └── use-cases/
+│       └── create-user.usecase.spec.ts    # Testes unitários
+
+├── infra/
+│   └── http/
+│       └── controllers/
+│           └── user.controller.spec.ts    # Testes de integração
+└── modules/
+    └── proposal/
+        └── __tests__/proposal.module.spec.ts`

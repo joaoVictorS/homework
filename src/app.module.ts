@@ -5,12 +5,14 @@ import { UserModule } from './modules/user/user.module';
 import { ProposalModule } from './modules/proposal/proposal.module';
 import { UserMiddleware } from './get-user-middleware';
 import { AdminController } from './infra/http/controllers/admin.controller';
+import { CustomerModule } from './modules/customer/customer.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(dataSourceOptions),
     UserModule,
     ProposalModule,
+    CustomerModule,
   ],
   controllers: [AdminController],
 })
