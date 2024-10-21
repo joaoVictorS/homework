@@ -42,7 +42,7 @@ bash
 
 Copiar código
 
-src/
+```src/
 ├── core/                  # Lógica de negócios (Casos de uso, Repositórios e Entidades)
 │   └── domain/            # Entidades e interfaces de repositório
 │   └── use-cases/         # Casos de uso que implementam a lógica
@@ -51,7 +51,7 @@ src/
 │   └── http/              # Controladores e rotas
 ├── modules/               # Módulos que organizam as funcionalidades
 └── common/                # Filtros globais, interceptors, middlewares
- 
+ ```
 
 ----------
 
@@ -71,8 +71,8 @@ src/
     
     Copiar código
     
-    `git clone https://github.com/seu-usuario/proposals-api.git
-    cd proposals-api` 
+    ```git clone https://github.com/joaoVictorS/homework.git
+    cd server``` 
     
 2.  Instale as dependências:
     
@@ -80,26 +80,9 @@ src/
     
     Copiar código
     
-    `yarn install` 
+    ```npm install
+       npm run migration:run```
     
-3.  Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis de ambiente:
-    
-    bash
-    
-    Copiar código
-    
-    `DATABASE_URL=sqlite://./data/proposals.db
-    PORT=3000` 
-    
-4.  Execute as migrações do banco de dados:
-    
-    bash
-    
-    Copiar código
-    
-    `yarn typeorm migration:run` 
-    
-
 ----------
 
 ## Execução
@@ -110,9 +93,9 @@ bash
 
 Copiar código
 
-`yarn start:dev` 
+`npm start` 
 
-A API estará disponível no endereço `http://localhost:3000`.
+A API estará disponível no endereço `http://localhost:3005`.
 
 ----------
 
@@ -130,9 +113,9 @@ Cria um novo usuário no sistema.
     
     Copiar código
     
-    `{
+    ```{
       "name": "John Doe"
-    }` 
+    }```
     
 -   **Resposta de Sucesso**:
     
@@ -140,13 +123,13 @@ Cria um novo usuário no sistema.
     
     Copiar código
     
-    {
+    ```{
       "id": 1,
       "name": "John Doe",
       "balance": 0,
       "createdAt": "2024-10-21T10:00:00.000Z",
       "updatedAt": "2024-10-21T10:00:00.000Z"
-    } 
+    } ```
     
 
 #### **GET** `/users/:id`
@@ -162,13 +145,13 @@ Busca detalhes de um usuário por seu ID.
     
     Copiar código
     
-    {
+    ```{
       "id": 1,
       "name": "John Doe",
       "balance": 1000,
       "createdAt": "2024-10-21T10:00:00.000Z",
       "updatedAt": "2024-10-21T10:00:00.000Z"
-    } 
+    } ```
     
 
 ### Clientes
@@ -183,12 +166,12 @@ Cria um novo cliente associado a um usuário.
     
     Copiar código
     
-    {
+   ``` {
       "name": "ACME Corp",
       "cpf": "12345678900",
       "userId": 1
       
-    }
+    }```
     
 -   **Resposta de Sucesso**:
     
@@ -196,13 +179,13 @@ Cria um novo cliente associado a um usuário.
     
     Copiar código
     
-    {
+   ``` {
       "id": 1,
       "name": "ACME Corp",
       "cpf": "12345678900",
       "userCreator": { "id": 1, "name": "John Doe" }
       
-    } 
+    } ```
     
 
 #### **GET** `/customers/:id`
@@ -218,13 +201,13 @@ Busca um cliente pelo ID.
     
     Copiar código
     
-    {
+   ``` {
       "id": 1,
       "name": "ACME Corp",
       "cpf": "12345678900",
       "userCreator": { "id": 1, "name": "John Doe" }
       
-    }
+    }```
     
 
 ### Propostas
@@ -239,11 +222,11 @@ Cria uma nova proposta para um cliente.
     
     Copiar código
     
-    {
+    ```{
       "customerId": 1,
       "profit": 5000
       
-    } 
+    } ```
     
 -   **Resposta de Sucesso**:
     
@@ -251,7 +234,7 @@ Cria uma nova proposta para um cliente.
     
     Copiar código
     
-    {
+   ``` {
       "id": 1,
       "customer": { "id": 1, "name": "ACME Corp" },
       "userCreator": { "id": 1, "name": "John Doe" },
@@ -260,7 +243,7 @@ Cria uma nova proposta para um cliente.
       "createdAt": "2024-10-21T10:00:00.000Z",
       "updatedAt": "2024-10-21T10:00:00.000Z"
       
-    } 
+    } ```
     
 
 #### **GET** `/proposals/:id`
@@ -276,14 +259,14 @@ Retorna uma proposta específica associada ao ID do usuário autenticado.
     
     Copiar código
     
-    {
+   ``` {
       "id": 1,
       "customer": { "id": 1, "name": "ACME Corp" },
       "userCreator": { "id": 1, "name": "John Doe" },
       "profit": 5000,
       "status": "PENDING"
       
-    } 
+    } ```
     
 
 #### **GET** `/proposals/refused`
@@ -296,7 +279,7 @@ Lista as propostas recusadas do usuário autenticado.
     
     Copiar código
     
-    [
+    ```[
       {
         "id": 1,
         "customer": { "id": 1, "name": "ACME Corp" },
@@ -305,7 +288,7 @@ Lista as propostas recusadas do usuário autenticado.
         "status": "REFUSED"
       }
       
-    ] 
+    ] ```
     
 
 #### **POST** `/proposals/:proposal_id/approve`
@@ -321,14 +304,14 @@ Aprova uma proposta pendente e credita o valor no saldo do usuário.
     
     Copiar código
     
-    {
+    ```{
       "id": 1,
       "customer": { "id": 1, "name": "ACME Corp" },
       "userCreator": { "id": 1, "name": "John Doe" },
       "profit": 5000,
       "status": "SUCCESSFUL"
       
-    } 
+    } ```
     
 
 ----------
@@ -362,7 +345,7 @@ bash
 
 Copiar código
 
-src/
+```src/
 ├── core/
 │   └── use-cases/
 │       └── create-user.usecase.spec.ts    # Testes unitários
@@ -373,4 +356,4 @@ src/
 │           └── user.controller.spec.ts    # Testes de integração
 └── modules/
     └── proposal/
-        └── __tests__/proposal.module.spec.ts
+        └── __tests__/proposal.module.spec.ts```
