@@ -1,6 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Proposal, ProposalStatus } from '../../../core/domain/entities/proposal.entity';
+import {
+  Proposal,
+  ProposalStatus,
+} from '../../../core/domain/entities/proposal.entity';
 import { Repository } from 'typeorm';
 
 describe('ProposalRepository', () => {

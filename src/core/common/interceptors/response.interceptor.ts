@@ -1,21 +1,21 @@
 import {
-  Injectable,
-  NestInterceptor,
-  ExecutionContext,
-  CallHandler,
+  ExceptionFilter,
+  Catch,
+  NotFoundException,
+  ArgumentsHost,
 } from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Response } from 'express';
 
-@Injectable()
-export class SuccessResponseInterceptor implements NestInterceptor {
-  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-    return next.handle().pipe(
-      map((data) => ({
-        status: 'success',
-        data: data || [],
-        message: 'Operation completed successfully',
-      })),
-    );
+@Catch(NotFoundException)
+export class NotFoundExceptionFilter implements ExceptionFilter {
+  catch(exception: NotFoundException, host: ArgumentsHost) {
+    const ctx = host.switchToHttp();
+    const response = ctx.getResponse<Response>();
+
+    response.status(200).json({
+      status: 'success',
+      data: [],
+      message: 'No data found',
+    });
   }
 }

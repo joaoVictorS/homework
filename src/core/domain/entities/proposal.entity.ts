@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Check,
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { User } from './user.entity';
 import { Customer } from './customer.entity';
 
@@ -10,6 +16,7 @@ export enum ProposalStatus {
 }
 
 @Entity({ name: 'proposals' })
+@Check(`status IN ('SUCCESSFUL', 'REFUSED', 'ERROR', 'PENDING')`)
 export class Proposal {
   @PrimaryGeneratedColumn()
   id: number;
