@@ -42,6 +42,7 @@ export class TypeOrmUserRepository implements IUserRepository {
     } catch (error) {
       this.logger.error(`Failed to save user ${user.name}`, error.stack);
       throw new InternalServerErrorException('Failed to save user');
+      
     }
   }
 }
