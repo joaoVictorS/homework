@@ -31,8 +31,7 @@ Este é o frontend de demonstração de uma API criada com NestJS. Ele foi desen
 1. **Clone o repositório:**
 
    ```bash
-   git clone https://github.com/seu-usuario/nestjs-api-demo-frontend.git
-   cd nestjs-api-demo-frontend
-
-  npm install
-  npm run dev
+    git clone https://github.com/seu-usuario/nestjs-api-demo-frontend.git
+    cd nestjs-api-demo-frontend
+    npm install
+    npm run dev
