@@ -1,4 +1,4 @@
-
++++markdown
 # **Proposals API**
 
 ## Sumário
@@ -12,7 +12,6 @@
     -   [Clientes](#clientes)
     -   [Propostas](#propostas)
 -   [Testes](#testes)
-
 
 ----------
 
@@ -38,20 +37,15 @@ O projeto adota uma **arquitetura modular** e **escalável**, permitindo uma fá
 
 ### Estrutura de Diretórios
 
-bash
-
-Copiar código
-
-src/
-├── core/                  # Lógica de negócios (Casos de uso, Repositórios e Entidades)
-│   └── domain/            # Entidades e interfaces de repositório
-│   └── use-cases/         # Casos de uso que implementam a lógica
-├── infra/                 # Infraestrutura (banco de dados, controladores HTTP)
-│   └── database/          # Repositórios que interagem com o banco via TypeORM
-│   └── http/              # Controladores e rotas
-├── modules/               # Módulos que organizam as funcionalidades
-└── common/                # Filtros globais, interceptors, middlewares
- 
+    src/
+    ├── core/                  # Lógica de negócios (Casos de uso, Repositórios e Entidades)
+    │   └── domain/            # Entidades e interfaces de repositório
+    │   └── use-cases/         # Casos de uso que implementam a lógica
+    ├── infra/                 # Infraestrutura (banco de dados, controladores HTTP)
+    │   └── database/          # Repositórios que interagem com o banco via TypeORM
+    │   └── http/              # Controladores e rotas
+    ├── modules/               # Módulos que organizam as funcionalidades
+    └── common/                # Filtros globais, interceptors, middlewares
 
 ----------
 
@@ -67,38 +61,29 @@ src/
 
 1.  Clone o repositório:
     
-    bash
-    
-    Copiar código
-    
-    `git clone https://github.com/seu-usuario/proposals-api.git
-    cd proposals-api` 
+    ```bash
+    git clone https://github.com/seu-usuario/proposals-api.git
+    cd proposals-api
+    ```
     
 2.  Instale as dependências:
     
-    bash
-    
-    Copiar código
-    
-    `yarn install` 
+    ```bash
+    yarn install
+    ```
     
 3.  Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis de ambiente:
     
-    bash
-    
-    Copiar código
-    
-    `DATABASE_URL=sqlite://./data/proposals.db
-    PORT=3000` 
+    ```bash
+    DATABASE_URL=sqlite://./data/proposals.db
+    PORT=3000
+    ```
     
 4.  Execute as migrações do banco de dados:
     
-    bash
-    
-    Copiar código
-    
-    `yarn typeorm migration:run` 
-    
+    ```bash
+    yarn typeorm migration:run
+    ```
 
 ----------
 
@@ -106,11 +91,9 @@ src/
 
 Para rodar a aplicação localmente, execute o comando:
 
-bash
-
-Copiar código
-
-`yarn start:dev` 
+```bash
+yarn start:dev
+```
 
 A API estará disponível no endereço `http://localhost:3000`.
 
@@ -126,29 +109,25 @@ Cria um novo usuário no sistema.
 
 -   **Body**:
     
-    json
-    
-    Copiar código
-    
-    ```
+    ```json
     {
-      "name": "John Doe"
+      "name": "John Doe",
       "cpf": 12159753258
     }
     ```
     
 -   **Resposta de Sucesso**:
     
-   ```
-   {
+    ```json
+    {
       "id": 1,
       "name": "John Doe",
-      "cpf": 12159753258
+      "cpf": 12159753258,
       "balance": 0,
       "createdAt": "2024-10-21T10:00:00.000Z",
       "updatedAt": "2024-10-21T10:00:00.000Z"
-    } 
-    ```{
+    }
+    ```
 
 #### **GET** `/users/:id`
 
@@ -159,16 +138,15 @@ Busca detalhes de um usuário por seu ID.
     -   `id`: ID do usuário a ser buscado.
 -   **Resposta de Sucesso**:
 
-    ```
+    ```json
     {
       "id": 1,
       "name": "John Doe",
       "balance": 1000,
       "createdAt": "2024-10-21T10:00:00.000Z",
       "updatedAt": "2024-10-21T10:00:00.000Z"
-    } 
+    }
     ```
-    
 
 ### Clientes
 
@@ -178,27 +156,24 @@ Cria um novo cliente associado a um usuário.
 
 -   **Body**:
     
-    ```
+    ```json
     {
       "name": "ACME Corp",
       "cpf": "12345678900",
       "userId": 1
-      
     }
     ```
     
 -   **Resposta de Sucesso**:
     
-    ```
+    ```json
     {
       "id": 1,
       "name": "ACME Corp",
       "cpf": "12345678900",
       "userCreator": { "id": 1, "name": "John Doe" }
-      
-    } 
+    }
     ```
-    
 
 #### **GET** `/customers/:id`
 
@@ -209,16 +184,14 @@ Busca um cliente pelo ID.
     -   `id`: ID do cliente a ser buscado.
 -   **Resposta de Sucesso**:
 
-    ```
+    ```json
     {
       "id": 1,
       "name": "ACME Corp",
       "cpf": "12345678900",
       "userCreator": { "id": 1, "name": "John Doe" }
-      
     }
     ```
-    
 
 ### Propostas
 
@@ -228,18 +201,16 @@ Cria uma nova proposta para um cliente.
 
 -   **Body**:
     
-    ```
+    ```json
     {
       "customerId": 1,
       "profit": 5000
-      
-    } 
+    }
     ```
     
 -   **Resposta de Sucesso**:
     
-    
-    ```
+    ```json
     {
       "id": 1,
       "customer": { "id": 1, "name": "ACME Corp" },
@@ -248,10 +219,8 @@ Cria uma nova proposta para um cliente.
       "status": "PENDING",
       "createdAt": "2024-10-21T10:00:00.000Z",
       "updatedAt": "2024-10-21T10:00:00.000Z"
-      
-    } 
+    }
     ```
-    
 
 #### **GET** `/proposals/:id`
 
@@ -262,15 +231,14 @@ Retorna uma proposta específica associada ao ID do usuário autenticado.
     -   `id`: ID da proposta a ser buscada.
 -   **Resposta de Sucesso**:
     
-    ```
+    ```json
     {
       "id": 1,
       "customer": { "id": 1, "name": "ACME Corp" },
       "userCreator": { "id": 1, "name": "John Doe" },
       "profit": 5000,
       "status": "PENDING"
-      
-    } 
+    }
     ```
 
 #### **GET** `/proposals/refused`
@@ -279,7 +247,7 @@ Lista as propostas recusadas do usuário autenticado.
 
 -   **Resposta de Sucesso**:
     
-    ```
+    ```json
     [
       {
         "id": 1,
@@ -288,10 +256,8 @@ Lista as propostas recusadas do usuário autenticado.
         "profit": 5000,
         "status": "REFUSED"
       }
-      
-    ] 
+    ]
     ```
-    
 
 #### **POST** `/proposals/:proposal_id/approve`
 
@@ -302,15 +268,14 @@ Aprova uma proposta pendente e credita o valor no saldo do usuário.
     -   `proposal_id`: ID da proposta a ser aprovada.
 -   **Resposta de Sucesso**:
     
-    ```
+    ```json
     {
       "id": 1,
       "customer": { "id": 1, "name": "ACME Corp" },
       "userCreator": { "id": 1, "name": "John Doe" },
       "profit": 5000,
       "status": "SUCCESSFUL"
-      
-    } 
+    }
     ```
 
 ----------
@@ -321,24 +286,25 @@ A API conta com **testes unitários** e **testes de integração**. Para rodar o
 
 -   **Testes Unitários**:
     
-    `npm run test` 
-    
+    ```bash
+    npm run test
+    ```
 
 ### Estrutura de Testes
 
 Os testes estão organizados da seguinte forma:
 
-```
-src/
-├── core/
-│   └── use-cases/
-│       └── create-user.usecase.spec.ts    # Testes unitários
+    src/
+    ├── core/
+    │   └── use-cases/
+    │       └── create-user.usecase.spec.ts    # Testes unitários
+    ├── infra/
+    │   └── http/
+    │      
 
-├── infra/
-│   └── http/
-│       └── controllers/
-│           └── user.controller.spec.ts    # Testes de integração
-└── modules/
-    └── proposal/
-        └── __tests__/proposal.module.spec.ts
-```
+ └── controllers/
+    │           └── user.controller.spec.ts    # Testes de integração
+    └── modules/
+        └── proposal/
+            └── __tests__/proposal.module.spec.ts
++++
