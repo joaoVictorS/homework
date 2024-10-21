@@ -71,8 +71,10 @@ Copiar código
     
     Copiar código
     
-    ```git clone https://github.com/joaoVictorS/homework.git
-    cd server``` 
+    ```
+    git clone https://github.com/joaoVictorS/homework.git
+    cd server
+    ``` 
     
 2.  Instale as dependências:
     
@@ -80,8 +82,10 @@ Copiar código
     
     Copiar código
     
-    ```npm install
-       npm run migration:run```
+    ```
+    npm install
+    npm run migration:run
+    ```
     
 ----------
 
@@ -171,7 +175,7 @@ Cria um novo cliente associado a um usuário.
       "cpf": "12345678900",
       "userId": 1
       
-    }```
+    }`
     
 -   **Resposta de Sucesso**:
     
@@ -185,7 +189,7 @@ Cria um novo cliente associado a um usuário.
       "cpf": "12345678900",
       "userCreator": { "id": 1, "name": "John Doe" }
       
-    } ```
+    } `
     
 
 #### **GET** `/customers/:id`
