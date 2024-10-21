@@ -51,7 +51,6 @@ Copiar código
 │   └── http/              # Controladores e rotas
 ├── modules/               # Módulos que organizam as funcionalidades
 └── common/                # Filtros globais, interceptors, middlewares
-
 ` 
 
 ----------
@@ -147,7 +146,6 @@ Cria um novo usuário no sistema.
       "balance": 0,
       "createdAt": "2024-10-21T10:00:00.000Z",
       "updatedAt": "2024-10-21T10:00:00.000Z"
-      
     }` 
     
 
@@ -170,7 +168,6 @@ Busca detalhes de um usuário por seu ID.
       "balance": 1000,
       "createdAt": "2024-10-21T10:00:00.000Z",
       "updatedAt": "2024-10-21T10:00:00.000Z"
-      
     }` 
     
 
