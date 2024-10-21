@@ -1,4 +1,3 @@
-+++markdown
 # **Proposals API**
 
 ## Sumário
@@ -307,4 +306,3 @@ Os testes estão organizados da seguinte forma:
     └── modules/
         └── proposal/
             └── __tests__/proposal.module.spec.ts
-+++
