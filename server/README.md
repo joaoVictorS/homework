@@ -61,29 +61,22 @@ O projeto adota uma **arquitetura modular** e **escalável**, permitindo uma fá
 1.  Clone o repositório:
     
     ```bash
-    git clone https://github.com/seu-usuario/proposals-api.git
-    cd proposals-api
+    git clone https://github.com/joaoVictorS/homework.git
+    cd server
     ```
     
 2.  Instale as dependências:
     
     ```bash
-    yarn install
+    npm install
     ```
     
-3.  Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis de ambiente:
+3.  Crie as migrations:
     
     ```bash
-    DATABASE_URL=sqlite://./data/proposals.db
-    PORT=3000
+    npm run migration:run
     ```
     
-4.  Execute as migrações do banco de dados:
-    
-    ```bash
-    yarn typeorm migration:run
-    ```
-
 ----------
 
 ## Execução
@@ -91,10 +84,10 @@ O projeto adota uma **arquitetura modular** e **escalável**, permitindo uma fá
 Para rodar a aplicação localmente, execute o comando:
 
 ```bash
-yarn start:dev
+npm start:dev
 ```
 
-A API estará disponível no endereço `http://localhost:3000`.
+A API estará disponível no endereço `http://localhost:3005`.
 
 ----------
 
