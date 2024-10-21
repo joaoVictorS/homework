@@ -71,11 +71,10 @@ export class TypeOrmCustomerRepository implements ICustomerRepository {
       );
       return savedCustomer;
     } catch (error) {
-      this.logger.error(
-        `Failed to save customer with CPF ${customer.cpf}`,
-        error.stack,
-      );
-      throw new InternalServerErrorException('Failed to save customer');
+      if (error instanceof ConflictException) {
+        throw error;
+      }
+      throw error;
     }
   }
 
